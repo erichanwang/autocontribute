@@ -1,6 +1,8 @@
 import random
 import subprocess
 from datetime import datetime
+import os
+import time
 
 def update_file():
     """Appends a new line with the current timestamp and a random number to data.txt."""
@@ -23,5 +25,7 @@ def git_push():
         print("Git command not found. Please ensure Git is installed and in your PATH.")
 
 if __name__ == "__main__":
-    update_file()
-    git_push()
+    while True:
+        update_file()
+        git_push()
+        time.sleep(60)  # Wait for 60 seconds before the next update
