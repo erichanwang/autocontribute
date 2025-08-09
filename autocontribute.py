@@ -18,8 +18,12 @@ def git_push():
         print("Git command not found. Please ensure Git is installed and in your PATH.")
 
 if __name__ == "__main__":
+    i = 0
     while True:
         update_file()
         git_push()
         print("Waiting for the next run...")
-        time.sleep(3600)  # Wait for 1 hour (3600 seconds) before the next update
+        time.sleep(5)  # Wait for 5 seconds before the next update
+        i += 1
+        if i > 20:
+            break
