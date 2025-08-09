@@ -1,21 +1,14 @@
-import random
 import subprocess
 from datetime import datetime
-import os
 import time
-
-def update_file():
-    """Appends a new line with the current timestamp and a random number to data.txt."""
-    with open("data.txt", "a") as f:
-        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        random_number = random.randint(1, 1000)
-        f.write(f"Update at {now} with random number: {random_number}\\n")
+from commit_generator import generate_commit_message, main as update_file
 
 def git_push():
     """Adds, commits, and pushes changes to the GitHub repository."""
     try:
         subprocess.run(["git", "add", "data.txt"], check=True)
-        commit_message = f"Automated commit at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        commit_message = generate_commit_message()
+        print(f"Committing with message: {commit_message}")
         subprocess.run(["git", "commit", "-m", commit_message], check=True)
         subprocess.run(["git", "push", "--set-upstream", "origin", "main"], check=True)
         print("Successfully pushed changes to GitHub.")
@@ -28,4 +21,5 @@ if __name__ == "__main__":
     while True:
         update_file()
         git_push()
-        time.sleep(60)  # Wait for 60 seconds before the next update
+        print("Waiting for the next run...")
+        time.sleep(3600)  # Wait for 1 hour (3600 seconds) before the next update
